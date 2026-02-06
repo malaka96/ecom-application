@@ -1,43 +1,39 @@
 package edu.malaka96.ecom_application.service;
 
 import edu.malaka96.ecom_application.model.User;
+import edu.malaka96.ecom_application.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    private List<User> usersList = new ArrayList<User>();
-    private int addCount = 0;
+    private final UserRepository userRepository;
 
     public List<User> getAllUsers() {
-        return usersList;
+        return userRepository.findAll();
     }
 
-    public Optional<User> getUser(String id) {
-        return usersList.stream()
-                .filter(user -> user.getId().equals(id))
-                .findFirst();
+    public Optional<User> getUser(Long id) {
+        return userRepository.findById(id);
     }
 
     public void addUser(User user) {
-        user.setId(String.valueOf(addCount));
-        usersList.add(user);
-        addCount++;
+        userRepository.save(user);
     }
 
 
     public Boolean updateUser(User updatedUser) {
-        return usersList.stream()
-                .filter(user -> user.getId().equals(updatedUser.getId()))
-                .findFirst()
+        return userRepository.findById(updatedUser.getId())
                 .map(existingUser -> {
                     existingUser
-                            .setEmail(updatedUser.getEmail());
-                    existingUser.setPassword(updatedUser.getPassword());
+                            .setFirstName(updatedUser.getFirstName());
+                    existingUser.setLastName(updatedUser.getLastName());
+                    userRepository.save(existingUser);
                     return true;
                 })
                 .orElse(false);
