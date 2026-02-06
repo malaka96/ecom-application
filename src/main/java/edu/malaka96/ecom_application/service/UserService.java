@@ -16,10 +16,19 @@ public class UserService {
         return usersList;
     }
 
+    public User getUser(String id){
+        for (User user : usersList){
+            if(user.getId().equals(id))
+                return user;
+        }
+        return null;
+    }
+
     public void addUser(User user){
         user.setId(String.valueOf(addCount));
         usersList.add(user);
         addCount++;
     }
+
 
 }
