@@ -2,6 +2,7 @@ package edu.malaka96.ecom_application.controller;
 
 import edu.malaka96.ecom_application.model.User;
 import edu.malaka96.ecom_application.model.dto.UserRequest;
+import edu.malaka96.ecom_application.model.dto.UserResponse;
 import edu.malaka96.ecom_application.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,13 +19,13 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/api/users")
-    public ResponseEntity<List<User>> getAll(){
+    public ResponseEntity<List<UserResponse>> getAll(){
         //return ResponseEntity.ok(userService.getAllUsers());
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.I_AM_A_TEAPOT);
     }
 
     @GetMapping("/api/user/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id){
+    public ResponseEntity<UserResponse> getUser(@PathVariable Long id){
         return userService.getUser(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
