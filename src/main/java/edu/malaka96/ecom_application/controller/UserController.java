@@ -1,6 +1,7 @@
 package edu.malaka96.ecom_application.controller;
 
 import edu.malaka96.ecom_application.model.User;
+import edu.malaka96.ecom_application.model.dto.UserRequest;
 import edu.malaka96.ecom_application.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,14 +31,14 @@ public class UserController {
     }
 
     @PostMapping("/api/adduser")
-    public String addUser(@RequestBody User user){
+    public String addUser(@RequestBody UserRequest user){
         userService.addUser(user);
         return "User added successfully";
     }
 
-    @PutMapping("/api/updateuser")
-    public ResponseEntity<?> updateUser(@RequestBody User user){
-        boolean updated = userService.updateUser(user);
+    @PutMapping("/api/updateuser/{id}")
+    public ResponseEntity<?> updateUser(@RequestBody UserRequest userRequest, @PathVariable Long id){
+        boolean updated = userService.updateUser(id,userRequest);
         if (updated)
             return ResponseEntity.ok("User updated successfully" );
         else
