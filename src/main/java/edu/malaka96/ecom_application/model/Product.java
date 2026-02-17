@@ -4,10 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity(name = "products")
 public class Product {
 
@@ -30,7 +28,7 @@ public class Product {
     private Integer stockQuantity;
     private String category;
     private String imageUrl;
-    private boolean isActive = true;
+    private Boolean isActive = true;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

@@ -44,7 +44,7 @@ public class UserService {
                     existingUser.setLastName(updatedUser.getLastName());
                     existingUser.setEmail(updatedUser.getEmail());
                     existingUser.setPhone(updatedUser.getPhone());
-                    existingUser.setRole(updatedUser.getUserRole());
+                    existingUser.setRole(updatedUser.getRole());
                     if(updatedUser.getAddressDTO() != null){
                         existingUser.setAddress(Address.builder()
                                 .street(updatedUser.getAddressDTO().getStreet())
