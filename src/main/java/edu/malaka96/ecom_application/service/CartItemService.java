@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -71,5 +72,15 @@ public class CartItemService {
         ));
 
         return true;
+    }
+
+    public List<CartItem> getCartItems(String userId){
+        Optional<User> userOptional = userRepository.findById(Long.valueOf(userId));
+        if(userOptional.isEmpty())
+            return List.of();
+        User user = userOptional.get();
+        return cartItemRepository.findAll().stream()
+                .filter(cartItem -> cartItem.getUser().equals(user))
+                .toList();
     }
 }
