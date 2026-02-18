@@ -20,4 +20,8 @@ public class ProductResponse {
     private Integer stockQuantity;
     private String category;
     private String imageUrl;
+
+    public ProductResponse() {
+
+    }
 }

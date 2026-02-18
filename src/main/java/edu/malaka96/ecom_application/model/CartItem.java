@@ -13,24 +13,24 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity()
-@Table(name = "products")
-public class Product {
-
+@Entity
+public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+    private Integer quantity;
     private BigDecimal price;
-    private Integer stockQuantity;
-    private String category;
-    private String imageUrl;
-    private Boolean isActive = true;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
 }

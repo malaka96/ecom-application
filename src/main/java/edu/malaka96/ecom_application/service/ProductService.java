@@ -5,6 +5,7 @@ import edu.malaka96.ecom_application.model.dto.ProductRequest;
 import edu.malaka96.ecom_application.model.dto.ProductResponse;
 import edu.malaka96.ecom_application.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,12 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
+    public List<ProductResponse> getAllProducts() {
+        return productRepository.findByIsActiveTrue().stream()
+                .map(this::mapToProductResponse)
+                .toList();
+    }
+
     public void addProduct(ProductRequest productRequest){
         productRequest.setIsActive(true);
         productRepository.save(mapToProductEntity(productRequest));
@@ -26,6 +33,14 @@ public class ProductService {
                 .map(this::mapToProductResponse)
                 .toList();
 
+    }
+
+    public boolean deleteProduct(Long id){
+        return productRepository.findById(id).map(product -> {
+            product.setIsActive(false);
+            productRepository.save(product);
+            return true;
+        }).orElse(false);
     }
 
 
@@ -66,5 +81,6 @@ public class ProductService {
                 .imageUrl(product.getImageUrl())
                 .build();
     }
+
 
 }

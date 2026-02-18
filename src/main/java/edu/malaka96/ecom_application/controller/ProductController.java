@@ -12,6 +12,11 @@ public class ProductController {
 
     private final ProductService productService;
 
+    @GetMapping("/api/allproducts")
+    public ResponseEntity<?> getAllProducts(){
+        return ResponseEntity.ok(productService.getAllProducts());
+    }
+
     @GetMapping("/api/products")
     public ResponseEntity<?> searchProduct(@RequestParam(value = "keyword") String keyword){
         return ResponseEntity.ok(productService.searchProducts(keyword));
@@ -28,6 +33,15 @@ public class ProductController {
         boolean isUpdated = productService.updateProduct(id, productRequest);
         if(isUpdated)
             return ResponseEntity.ok("Product updated successfully");
+        else
+            return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/api/deleteproduct/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id){
+        boolean isDeleted = productService.deleteProduct(id);
+        if(isDeleted)
+            return ResponseEntity.ok("Product deleted successfully");
         else
             return ResponseEntity.notFound().build();
     }
