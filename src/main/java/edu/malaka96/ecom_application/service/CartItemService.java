@@ -7,6 +7,7 @@ import edu.malaka96.ecom_application.model.dto.CartItemRequest;
 import edu.malaka96.ecom_application.repository.CartItemRepository;
 import edu.malaka96.ecom_application.repository.ProductRepository;
 import edu.malaka96.ecom_application.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,13 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CartItemService {
     private final CartItemRepository cartItemRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
-    public Boolean addToCart(String userId, CartItemRequest cartItemRequest){
+    public boolean addToCart(String userId, CartItemRequest cartItemRequest){
         Optional<Product> productOptional = productRepository.findById(cartItemRequest.getProductId());
         if(productOptional.isEmpty())
             return false;
@@ -52,5 +54,22 @@ public class CartItemService {
         }
         return true;
 
+    }
+
+    public boolean deleteItemFromCart(String userId, Long productId){
+        Optional<Product> productOptional = productRepository.findById(productId);
+        if(productOptional.isEmpty())
+            return false;
+
+        Optional<User> userOptional = userRepository.findById(Long.valueOf(userId));
+        if(userOptional.isEmpty())
+            return false;
+
+        productOptional.ifPresent(product -> cartItemRepository.deleteByUserAndProduct(
+                userOptional.get(),
+                product
+        ));
+
+        return true;
     }
 }
