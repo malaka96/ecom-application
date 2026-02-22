@@ -24,4 +24,14 @@ management:
     health:
       show-details: always
 
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: MyNewApp
+    description: App built by us
+    version: 1.0.3
+
 
