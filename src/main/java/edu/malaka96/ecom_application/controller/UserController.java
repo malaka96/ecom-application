@@ -4,6 +4,7 @@ import edu.malaka96.ecom_application.model.dto.UserRequest;
 import edu.malaka96.ecom_application.model.dto.UserResponse;
 import edu.malaka96.ecom_application.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
 
     private final UserService userService;
@@ -19,6 +21,9 @@ public class UserController {
     @GetMapping("/api/users")
     public ResponseEntity<List<UserResponse>> getAll(){
         //return ResponseEntity.ok(userService.getAllUsers());
+        log.debug("Debug message");
+        log.info("Info message");
+        log.error("Error message");
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.I_AM_A_TEAPOT);
     }
 
@@ -32,6 +37,7 @@ public class UserController {
     @PostMapping("/api/adduser")
     public String addUser(@RequestBody UserRequest user){
         userService.addUser(user);
+
         return "User added successfully";
     }
 
