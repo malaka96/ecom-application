@@ -2,18 +2,32 @@ spring:
   application:
     name: ecom-application
 
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/ecom_db
+#    username: ${DB_USERNAME}
+#    password: ${DB_PASSWORD}
+
   datasource:
-    url: jdbc:mysql://localhost:3306/ecom_db
+    url: jdbc:h2:mem:ecom_db
+    driverClassName: org.h2.Driver
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
   jpa:
-    hibernate:
-      ddl-auto: create # when use "create" jpa delete existing tables then create new tables
-    show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+#  jpa:
+#    hibernate:
+#      ddl-auto: create # when use "create" jpa delete existing tables then create new tables
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQLDialect
 
 management:
   endpoints:
@@ -23,8 +37,8 @@ management:
   endpoint:
     health:
       show-details: always
-    shutdown:
-      enabled: true
+#    shutdown:
+#      enabled: true
 
 
   info:
