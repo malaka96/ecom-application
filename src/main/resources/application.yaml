@@ -3,7 +3,7 @@ spring:
     name: ecom-application
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/ecom_db
+    url: jdbc:postgresql://localhost:5432/ecom_db # can use postgres username that used in docker-compose file as db name. because default a database is being created using that name
     username: postgres
     password: ${DB_PASSWORD}
   jpa:
